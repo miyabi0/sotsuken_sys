@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="sotsuken_sys:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>sotsuken_sys</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="sotsuken_sys-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="sotsuken_sys:war exploded" />
+    </root>
+  </artifact>
+</component>
