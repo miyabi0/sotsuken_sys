@@ -22,8 +22,6 @@
     <div class="container-fluid">
         <a class="navbar-brand">卒業研究@njb</a>
         <form class="d-flex mt-3" action="./FrontControllerServlet" method="post">
-            <!--<input class="form-control me-2" type="search" placeholder="テーマ名" aria-label="Search">
-            <input type="submit" class="btn btn-primary" value="検索">-->
             <input type="hidden" name="operation" value="logout">
             <input type="submit" class="btn btn-primary" value="ログアウト">
         </form>
