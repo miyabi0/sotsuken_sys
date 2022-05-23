@@ -49,10 +49,10 @@
 		</div>
 		<nav class="navbar fixed-bottom bg-light border-top">
 			<div class="container-fluid">
-				<input type="submit" class="btn btn-primary mx-auto px-5" value="検索" onclick="search();">
+				<input type="submit" class="btn btn-primary mx-auto px-5" value="検索">
 			</div>
 		</nav>
-		<input type="hidden" name="operation" value="search">
+		<input type="hidden" name="operation" value="result">
 	</form>
 	<script src="bootstrap-5.1.3-dist/js/bootstrap.bundle.js"></script>
 </body>

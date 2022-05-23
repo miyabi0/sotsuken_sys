@@ -38,12 +38,12 @@
                             <%
                                 }
                             %>
-                            <p class="card-text mt-3">ダウンロード：
-                            <form action="./FrontController" method="post">
-                                <input type="hidden" name="operation" value="file_link">
-                                <input type="submit" class="btn btn-sm btn-outline-secondary" value="<%=spBean.getSp_file()%>">
-                            </form>
-                            </p>
+                            <div class="card-text mt-3">
+                                <form action="./FrontController" method="post">
+                                    <input type="hidden" name="operation" value="file_link">
+                                    <input type="submit" class="btn btn-sm btn-outline-secondary" value="ダウンロード（<%=spBean.getSp_file()%>）">
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
