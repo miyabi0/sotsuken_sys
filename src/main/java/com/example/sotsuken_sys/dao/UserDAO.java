@@ -46,20 +46,8 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            if (pStmt != null) {
-                try {
-                    pStmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+
+            cm.finallyBlock(pStmt);
         }
         // 画面で入力されたパスワードと、DB内のパスワードが一致しているか判定
         String sha256_pass = DigestUtils.sha256Hex(user_pwd);

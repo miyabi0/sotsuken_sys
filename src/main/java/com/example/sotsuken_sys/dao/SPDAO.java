@@ -1,7 +1,6 @@
 package com.example.sotsuken_sys.dao;
 
 import com.example.sotsuken_sys.entity.SPBean;
-import com.example.sotsuken_sys.entity.TagBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,20 +52,7 @@ public class SPDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        if (pStmt != null) {
-            try {
-                pStmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (con != null) {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        cm.finallyBlock(pStmt);
     }
         return spList;
     }
@@ -101,21 +87,36 @@ public class SPDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-        if (pStmt != null) {
-            try {
-                pStmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (con != null) {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+            cm.finallyBlock(pStmt);
     }
         return spBean;
+    }
+    public boolean add(String theme,String year,String overview,String filename){
+        boolean is_success = true;
+        ConnectionManager cm = new ConnectionManager();
+
+        PreparedStatement pStmt = null;
+
+        try {
+            con = cm.getConnection();
+
+            // SELECT文の準備
+            String sql = "INSERT INTO seniorproject(sp_theme,sp_year,sp_overview,sp_file) VALUES (?,?,?,?);";
+            pStmt = con.prepareStatement(sql);
+
+            pStmt.setString(1, theme);
+            pStmt.setString(2, year);
+            pStmt.setString(3, overview);
+            pStmt.setString(4, filename);
+
+            pStmt.executeUpdate();
+        } catch (SQLException e) {
+            is_success = false;
+            e.printStackTrace();
+        }
+        finally {
+            cm.finallyBlock(pStmt);
+        }
+        return is_success;
     }
 }

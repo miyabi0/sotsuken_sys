@@ -28,7 +28,7 @@
             <form action="./FrontController" method="post" name="menu-form">
                     <div class="shadow-sm card">
                         <div class="card-body">
-                            <input type="button" class="form-control mb-3 btn btn-lg btn-secondary" value="卒業研究登録" onclick="menuClick('');">
+                            <input type="button" class="form-control mb-3 btn btn-lg btn-secondary" value="卒業研究登録" onclick="menuClick('entry_open');">
                             <input type="button" class="form-control btn btn-lg btn-secondary" value="卒業研究検索" onclick="menuClick('search');">
                             <input type="hidden" name="operation">
                         </div>

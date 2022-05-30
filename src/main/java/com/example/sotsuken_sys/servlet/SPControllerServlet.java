@@ -1,6 +1,8 @@
 package com.example.sotsuken_sys.servlet;
 
 import com.example.sotsuken_sys.dao.SPDAO;
+import com.example.sotsuken_sys.dao.TagDAO;
+import com.example.sotsuken_sys.dao.TagMapDAO;
 import com.example.sotsuken_sys.entity.SPBean;
 
 import javax.servlet.*;
@@ -87,5 +89,53 @@ public class SPControllerServlet extends HttpServlet {
         }
         return is_success;
 
+    }
+    public boolean add(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //エラーメッセージ変数
+        String errorMessage = "";
+
+        //セッション情報
+        HttpSession session = request.getSession();
+
+        // 処理が成功したかを示す値
+        boolean is_success = false;
+        String theme = request.getParameter("theme");
+        String year = request.getParameter("year");
+        String[] checkedTags = request.getParameterValues("checkbox");
+        String overview = request.getParameter("overview");
+        Part part = request.getPart("file");
+        String fileName = this.getFileName(part);
+        part.write(getServletContext().getRealPath("/WEB-INF/uploaded") + "/" + fileName);
+        SPDAO spdao = new SPDAO();
+        if (spdao.add(theme,year,overview,fileName)){
+            for (String tag :checkedTags) {
+                TagMapDAO tagMapDAO = new TagMapDAO();
+                if (tagMapDAO.add(Integer.parseInt(tag))){
+                    is_success = true;
+                }else{
+                    errorMessage="タグ情報の登録に失敗しました。";
+                }
+
+            }
+        }else {
+            errorMessage="卒業研究の登録に失敗しました。";
+        }
+        if (errorMessage != null && errorMessage.length() > 0) {
+            session.setAttribute("errorMessage", errorMessage);
+        }
+        return is_success;
+    }
+
+    private String getFileName(Part part) {
+        String name = null;
+        for (String dispotion : part.getHeader("Content-Disposition").split(";")) {
+            if (dispotion.trim().startsWith("filename")) {
+                name = dispotion.substring(dispotion.indexOf("=") + 1).replace("\"", "").trim();
+                name = name.substring(name.lastIndexOf("\\") + 1);
+                break;
+            }
+        }
+        return name;
     }
 }

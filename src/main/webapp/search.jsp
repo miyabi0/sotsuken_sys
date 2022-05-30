@@ -11,7 +11,6 @@
 
 	<%
         List<TagBean> tagList = com.example.sotsuken_sys.util.AutoCast.automaticCast(request.getAttribute("tagList"));
-
 %>
 </head>
 

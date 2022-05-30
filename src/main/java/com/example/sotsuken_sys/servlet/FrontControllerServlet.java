@@ -69,6 +69,16 @@ public class FrontControllerServlet extends HttpServlet {
                 islogin = false;
                 rdstr = "index.jsp";
             }
+        } else if (operation.equals("entry_open")) {
+            TagControllerServlet tc = new TagControllerServlet();
+                if (tc.show(request, response)) {
+                    rdstr = "entry.jsp";
+            }
+        } else if (operation.equals("entry")) {
+            SPControllerServlet spc = new SPControllerServlet();
+            if (spc.add(request,response)){
+                rdstr = "";
+            }
         }
         if (islogin){
                 request.getRequestDispatcher(rdstr).forward(request, response);

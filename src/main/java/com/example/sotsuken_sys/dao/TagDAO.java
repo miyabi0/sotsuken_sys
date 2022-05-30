@@ -1,8 +1,6 @@
 package com.example.sotsuken_sys.dao;
 
 import com.example.sotsuken_sys.entity.TagBean;
-import com.example.sotsuken_sys.entity.UserBean;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,20 +44,7 @@ public class TagDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (pStmt != null) {
-                try {
-                    pStmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            cm.finallyBlock(pStmt);
         }
         return tagList;
 
@@ -113,5 +98,37 @@ public class TagDAO {
             }
         }
         return tagNameList;
+    }
+
+    /**
+     * 新しくtagを追加する。
+     * @param tag_name
+     * @return
+     */
+    public boolean add(String tag_name) {
+        boolean is_success = true;
+        ConnectionManager cm = new ConnectionManager();
+
+        PreparedStatement pStmt = null;
+
+        try {
+            con = cm.getConnection();
+
+            // SELECT文の準備
+            String sql = "INSERT INTO tag(tag_name) VALUES (?);";
+            pStmt = con.prepareStatement(sql);
+
+            pStmt.setString(1, tag_name);
+
+            pStmt.executeUpdate();
+        } catch (SQLException e) {
+            is_success = false;
+            e.printStackTrace();
+        }
+        finally {
+
+            cm.finallyBlock(pStmt);
+        }
+        return is_success;
     }
 }

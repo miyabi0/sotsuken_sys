@@ -70,4 +70,28 @@ public class TagControllerServlet extends HttpServlet {
         }
         return is_success;
     }
+
+    /**
+     * 新しいタグを追加する。
+     * @param request
+     * @param response
+     * @return
+     */
+    public boolean add(HttpServletRequest request, HttpServletResponse response) {
+        String errorMessage = "";
+
+        //セッション情報
+        HttpSession session = request.getSession();
+
+        String new_tag = request.getParameter("new_tag");
+        TagDAO tDAO = new TagDAO();
+        boolean is_success = tDAO.add(new_tag);
+        if(!is_success){
+            errorMessage = "タグの登録に失敗しました。";
+        }
+        if (errorMessage != null && errorMessage.length() > 0) {
+            session.setAttribute("errorMessage", errorMessage);
+        }
+        return is_success;
+    }
 }
